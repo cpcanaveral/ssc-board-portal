@@ -6,84 +6,150 @@
 
 <style>
 body {
-  margin:0;
-  font-family:Segoe UI, Arial, sans-serif;
-  background:#f3f6fb;
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f0f3f8;
 }
 
 /* HEADER */
 .header {
-  background:#1f2f55;
-  color:white;
-  display:flex;
-  align-items:center;
-  gap:15px;
-  padding:15px 20px;
+  background: linear-gradient(90deg, #1f2f55, #2f4690);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  border-radius: 0 0 12px 12px;
 }
 .header img {
-  height:60px;
+  height: 60px;
 }
 .header h1 {
-  margin:0;
-  font-size:22px;
+  margin: 0;
+  font-size: 22px;
 }
 .header p {
-  margin:0;
-  font-size:14px;
-  opacity:0.85;
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.85;
 }
 
 /* CONTAINER */
 .container {
-  max-width:1000px;
-  margin:auto;
-  padding:20px;
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
 }
 
 /* SECTIONS */
 .section {
-  background:white;
-  border-radius:10px;
-  margin-bottom:15px;
-  box-shadow:0 4px 8px rgba(0,0,0,0.05);
+  border-radius: 14px;
+  overflow: hidden;
+  background: transparent;
+  width: 100%;
 }
+
+/* SECTION HEADER */
 .section-header {
-  padding:15px 20px;
-  font-weight:bold;
-  cursor:pointer;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  padding: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #1f2f55, #2f4690);
+  color: white;
+  border-radius: 14px;
+  font-size: 17px;
+  user-select: none;
+  min-height: 60px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: background 0.3s, transform 0.2s;
 }
 .section-header:hover {
-  background:#f0f3f8;
+  background: linear-gradient(90deg, #2f4690, #3f5fb0);
 }
+
+/* Arrow at far right */
+.section-header .arrow {
+  transition: transform 0.4s ease;
+  font-size: 18px;
+}
+.section-header.active .arrow {
+  transform: rotate(90deg);
+}
+
+/* SECTION CONTENT */
 .section-content {
-  display:none;
-  padding:15px 20px 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.4s ease;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  justify-content: start;
+
+  /* padding to prevent tiles from touching edges */
+  padding: 0 15px 0 15px;
+}
+
+/* OPENED STATE */
+.section-content.open {
+  padding: 15px 15px 20px 15px;
 }
 
 /* TILES */
-.tiles {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-  gap:15px;
-}
 .tile {
-  background:#1f2f55;
-  color:white;
-  text-decoration:none;
-  padding:18px;
-  border-radius:12px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-weight:600;
-  transition:0.2s;
+  background: white;
+  color: #1f2f55;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+
+  min-height: 60px; /* flexible height */
+  padding: 0 15px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.4s ease, opacity 0.4s ease, background 0.3s, color 0.3s, box-shadow 0.3s ease;
+
+  width: 100%;
+  box-sizing: border-box;
+}
+.tile.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 .tile:hover {
-  background:#2f4690;
-  transform:translateY(-2px);
+  background: #1f2f55;
+  color: white;
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Responsive for smaller screens */
+@media screen and (max-width: 1100px) {
+  .section-content {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+@media screen and (max-width: 600px) {
+  .section-content {
+    grid-template-columns: 1fr;
+  }
+  .tile {
+    width: 100%;
+  }
 }
 </style>
 </head>
@@ -92,7 +158,7 @@ body {
 
 <!-- HEADER -->
 <div class="header">
-  <img src="logo.png">
+  <img src="logo.png" alt="SSC Logo">
   <div>
     <h1>SIQUIJOR STATE COLLEGE</h1>
     <p>Office of the Board / College Secretary</p>
@@ -103,56 +169,102 @@ body {
 
 <!-- COMMUNICATIONS -->
 <div class="section">
-  <div class="section-header" onclick="toggle(this)">📬 Communications</div>
-  <div class="section-content tiles">
-    <a class="tile" href="https://docs.google.com/spreadsheets/d/1oIchE_VlhgrMxYIFVYI4k01E3U-0lqglaXWohFMnbd4/" target="_blank">Incoming Documents</a>
-    <a class="tile" href="https://docs.google.com/spreadsheets/d/1XijZIP9Z3vTyyCWW5eSWhT2y40NKj6TyFHkuycBZkvg/" target="_blank">Outgoing Documents</a>
+  <button class="section-header">
+    <span>📬 Communications</span>
+    <span class="arrow">&raquo;</span>
+  </button>
+  <div class="section-content">
+    <a class="tile" href="#">Incoming Documents</a>
+    <a class="tile" href="#">Outgoing Documents</a>
   </div>
 </div>
 
 <!-- RESOLUTIONS -->
 <div class="section">
-  <div class="section-header" onclick="toggle(this)">📄 Resolutions & Endorsements</div>
-  <div class="section-content tiles">
-    <a class="tile" href="https://docs.google.com/spreadsheets/d/1UqNOlq3hL6fcJUO5PsQMwXjyszCQWdiPhvWHl9HWz_U/" target="_blank">Board Resolutions</a>
-    <a class="tile" href="https://docs.google.com/spreadsheets/d/1lmceXeKFJNfEnkL2O0vRPcMAjATFSyq4FC1m3dhLGXU/" target="_blank">Finance Committee</a>
-    <a class="tile" href="https://docs.google.com/spreadsheets/d/1u5iclvXbS9se_9LNIu_6xuu5lA-5eN2bXiD9RNPOsRk/" target="_blank">Joint Acad-Admin</a>
+  <button class="section-header">
+    <span>📄 Resolutions & Endorsements</span>
+    <span class="arrow">&raquo;</span>
+  </button>
+  <div class="section-content">
+    <a class="tile" href="#">Board Resolutions</a>
+    <a class="tile" href="#">Finance Committee Endorsements</a>
+    <a class="tile" href="#">Joint Acad-Admin Council Endorsements</a>
   </div>
 </div>
 
 <!-- MEETINGS -->
 <div class="section">
-  <div class="section-header" onclick="toggle(this)">👥 Meetings</div>
-  <div class="section-content tiles">
-    <a class="tile" href="https://docs.google.com/spreadsheets/d/1J_mpqD7MiYjXo420paaQIXaziC8W0jNx2noebvjewXM/" target="_blank">Attendance</a>
-    <a class="tile" href="https://docs.google.com/spreadsheets/d/1ZiraufprpduVqgtQh38UvqoYfbGxk3b9FolP0Df6xDY/" target="_blank">Minutes</a>
+  <button class="section-header">
+    <span>👥 Meetings</span>
+    <span class="arrow">&raquo;</span>
+  </button>
+  <div class="section-content">
+    <a class="tile" href="#">Attendance</a>
+    <a class="tile" href="#">Minutes</a>
   </div>
 </div>
 
 <!-- SYSTEMS -->
 <div class="section">
-  <div class="section-header" onclick="toggle(this)">⚙️ Systems</div>
-  <div class="section-content tiles">
-    <a class="tile" href="https://ocdra.vercel.app/systems" target="_blank">OCDRA Systems</a>
-    <a class="tile" href="https://siquijorstate-records.online/index.php" target="_blank">Records Management System</a>
+  <button class="section-header">
+    <span>⚙️ Systems</span>
+    <span class="arrow">&raquo;</span>
+  </button>
+  <div class="section-content">
+    <a class="tile" href="#">OCDRA Systems</a>
+    <a class="tile" href="#">Records Management System</a>
   </div>
 </div>
 
 <!-- FILES -->
 <div class="section">
-  <div class="section-header" onclick="toggle(this)">📂 Other School Files</div>
-  <div class="section-content tiles">
-    <a class="tile" href="https://drive.google.com/drive/folders/1fQtVNKN9ez4mrPK630kN83_kbs5frjRi" target="_blank">Open Google Drive</a>
+  <button class="section-header">
+    <span>📂 Other School Files</span>
+    <span class="arrow">&raquo;</span>
+  </button>
+  <div class="section-content">
+    <a class="tile" href="#">Open Google Drive</a>
   </div>
 </div>
 
 </div>
 
 <script>
-function toggle(el){
-  const content = el.nextElementSibling;
-  content.style.display = content.style.display === "block" ? "none" : "block";
-}
+const headers = document.querySelectorAll('.section-header');
+
+headers.forEach(header => {
+  header.addEventListener('click', () => {
+    const content = header.nextElementSibling;
+    const isOpen = content.classList.contains('open');
+
+    // Close all sections
+    headers.forEach(h => {
+      h.classList.remove('active');
+      const c = h.nextElementSibling;
+      c.classList.remove('open');
+      c.style.maxHeight = null;
+
+      c.querySelectorAll('.tile').forEach(tile => {
+        tile.classList.remove('show');
+      });
+    });
+
+    // Open clicked section
+    if (!isOpen) {
+      content.classList.add('open');
+      content.style.maxHeight = content.scrollHeight + "px";
+      header.classList.add('active');
+
+      // Fade-in tiles
+      const tiles = content.querySelectorAll('.tile');
+      tiles.forEach((tile, index) => {
+        setTimeout(() => {
+          tile.classList.add('show');
+        }, index * 100);
+      });
+    }
+  });
+});
 </script>
 
 </body>
