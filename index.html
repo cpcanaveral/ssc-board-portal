@@ -55,7 +55,7 @@ body {
 
 /* SECTION HEADER */
 .section-header {
-  padding: 20px;
+  padding: 40px 20px; /* doubled height */
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -64,9 +64,9 @@ body {
   background: linear-gradient(90deg, #1f2f55, #2f4690);
   color: white;
   border-radius: 14px;
-  font-size: 17px;
+  font-size: 34px; /* doubled text size */
   user-select: none;
-  min-height: 60px;
+  min-height: 120px; /* doubled */
   width: 100%;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   transition: background 0.3s, transform 0.2s;
@@ -78,7 +78,7 @@ body {
 /* Arrow at far right */
 .section-header .arrow {
   transition: transform 0.4s ease;
-  font-size: 18px;
+  font-size: 28px; /* bigger arrow */
 }
 .section-header.active .arrow {
   transform: rotate(90deg);
@@ -109,13 +109,14 @@ body {
   color: #1f2f55;
   text-decoration: none;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 20px; /* bigger text */
   text-align: center;
 
-  min-height: 60px; /* flexible height */
+  min-height: 120px; /* doubled height */
   padding: 0 15px;
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -126,6 +127,15 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
+
+/* ICONS inside tiles */
+.tile::before {
+  content: attr(data-icon);
+  font-size: 40px;
+  margin-bottom: 10px;
+  display: block;
+}
+
 .tile.show {
   opacity: 1;
   transform: translateY(0);
@@ -171,11 +181,11 @@ body {
 <div class="section">
   <button class="section-header">
     <span>📬 Communications</span>
-    <span class="arrow">&raquo;</span>
+    <span class="arrow">>></span>
   </button>
   <div class="section-content">
-    <a class="tile" href="#">Incoming Documents</a>
-    <a class="tile" href="#">Outgoing Documents</a>
+    <a class="tile" href="#" data-icon="📥">Incoming Documents</a>
+    <a class="tile" href="#" data-icon="📤">Outgoing Documents</a>
   </div>
 </div>
 
@@ -183,12 +193,12 @@ body {
 <div class="section">
   <button class="section-header">
     <span>📄 Resolutions & Endorsements</span>
-    <span class="arrow">&raquo;</span>
+    <span class="arrow">>></span>
   </button>
   <div class="section-content">
-    <a class="tile" href="#">Board Resolutions</a>
-    <a class="tile" href="#">Finance Committee Endorsements</a>
-    <a class="tile" href="#">Joint Acad-Admin Council Endorsements</a>
+    <a class="tile" href="#" data-icon="📝">Board Resolutions</a>
+    <a class="tile" href="#" data-icon="💰">Finance Committee Endorsements</a>
+    <a class="tile" href="#" data-icon="🤝">Joint Acad-Admin Council Endorsements</a>
   </div>
 </div>
 
@@ -196,11 +206,11 @@ body {
 <div class="section">
   <button class="section-header">
     <span>👥 Meetings</span>
-    <span class="arrow">&raquo;</span>
+    <span class="arrow">>></span>
   </button>
   <div class="section-content">
-    <a class="tile" href="#">Attendance</a>
-    <a class="tile" href="#">Minutes</a>
+    <a class="tile" href="#" data-icon="📋">Attendance</a>
+    <a class="tile" href="#" data-icon="🗒️">Minutes</a>
   </div>
 </div>
 
@@ -208,11 +218,11 @@ body {
 <div class="section">
   <button class="section-header">
     <span>⚙️ Systems</span>
-    <span class="arrow">&raquo;</span>
+    <span class="arrow">>></span>
   </button>
   <div class="section-content">
-    <a class="tile" href="#">OCDRA Systems</a>
-    <a class="tile" href="#">Records Management System</a>
+    <a class="tile" href="#" data-icon="💻">OCDRA Systems</a>
+    <a class="tile" href="#" data-icon="📁">Records Management System</a>
   </div>
 </div>
 
@@ -220,10 +230,10 @@ body {
 <div class="section">
   <button class="section-header">
     <span>📂 Other School Files</span>
-    <span class="arrow">&raquo;</span>
+    <span class="arrow">>></span>
   </button>
   <div class="section-content">
-    <a class="tile" href="#">Open Google Drive</a>
+    <a class="tile" href="#" data-icon="🗂️">Open Google Drive</a>
   </div>
 </div>
 
